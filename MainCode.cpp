@@ -1,6 +1,6 @@
-#include <iostream> // For input/output operations
-#include <cstdlib> // For rand() and srand()
-#include <ctime> // For time() and time-related functions
+#include <iostream>
+#include <cstdlib> // For rand and srand
+#include <ctime> // For time
 
 using namespace std;
 
@@ -58,7 +58,7 @@ public:
         cout << "+" << endl;
     }
 
-    // Shuffle the game board by making a given number of random moves
+    // Mix the game board
     void shuffleBoard(int moves) {
         srand(time(nullptr));
         for (int i = 0; i < moves; i++) {
@@ -83,14 +83,13 @@ public:
         return true;
     }
 
-    // Make a move based on the user input
+    // Make a move based on the input
     void makeMove(char move) {
         switch (tolower(move)) {
             case 'w': moveUp(); break;
             case 's': moveDown(); break;
             case 'a': moveLeft(); break;
             case 'd': moveRight(); break;
-            default: cout << "Invalid move!" << endl; break;
         }
     }
 
@@ -138,7 +137,7 @@ public:
         }
     }
 
-    // Get the number of moves made by the player
+    // Get the number of moves
     int getMoves() {
         return moves;
     }
