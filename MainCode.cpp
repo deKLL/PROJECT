@@ -1,17 +1,19 @@
-#include <iostream>
-#include <cstdlib>
-#include <ctime>
+#include <iostream> // For input/output operations
+#include <cstdlib> // For rand() and srand()
+#include <ctime> // For time() and time-related functions
+
+using namespace std;
 
 const int SIZE = 3;
 
 class FifteenPuzzle {
 private:
-    int board[SIZE][SIZE];
-    int emptyTileX;
-    int emptyTileY;
-    int moves;
-    time_t startTime;
-    time_t endTime;
+    int board[SIZE][SIZE]; // Game board
+    int emptyTileX; // X-coordinate of the empty tile
+    int emptyTileY; // Y-coordinate of the empty tile
+    int moves; // Number of moves made by the player
+    time_t startTime; // Start time of the game
+    time_t endTime; // End time of the game
 
 public:
     FifteenPuzzle() {
@@ -22,45 +24,45 @@ public:
         endTime = 0;
     }
 
-    // Create the initial board configuration
+    // Create the initial game board
     void createBoard() {
         int number = 1;
         for (int i = 0; i < SIZE; i++)
             for (int j = 0; j < SIZE; j++)
                 board[i][j] = number++;
-        board[SIZE - 1][SIZE - 1] = 0;
+        board[SIZE - 1][SIZE - 1] = 0; // Set the empty tile
     }
 
-    // Print the current board configuration
+    // Print the current game board
     void printBoard() {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 if (board[i][j] == 0)
-                    std::cout << "   ";
+                    cout << "   "; // Print empty tile as spaces
                 else
-                    std::cout << "+---";
+                    cout << "+---"; // Print border between tiles
             }
-            std::cout << "+" << std::endl;
+            cout << "+" << endl;
 
             for (int j = 0; j < SIZE; j++) {
                 if (board[i][j] == 0)
-                    std::cout << "   ";
+                    cout << "   "; // Print empty tile as spaces
                 else
-                    std::cout << "| " << board[i][j] << " ";
+                    cout << "| " << board[i][j] << " "; // Print tile value
             }
-            std::cout << "|" << std::endl;
+            cout << "|" << endl;
         }
 
         for (int j = 0; j < SIZE; j++)
-            std::cout << "+---";
-        std::cout << "+" << std::endl;
+            cout << "+---";
+        cout << "+" << endl;
     }
 
-    // Shuffle the board by making a given number of random moves
+    // Shuffle the game board by making a given number of random moves
     void shuffleBoard(int moves) {
         srand(time(nullptr));
         for (int i = 0; i < moves; i++) {
-            int randomMove = rand() % 4;
+            int randomMove = rand() % 4; // Generate a random number from 0 to 3
             switch (randomMove) {
                 case 0: moveUp(); break;
                 case 1: moveDown(); break;
@@ -88,14 +90,14 @@ public:
             case 's': moveDown(); break;
             case 'a': moveLeft(); break;
             case 'd': moveRight(); break;
-            default: std::cout << "Invalid move!" << std::endl; break;
+            default: cout << "Invalid move!" << endl; break;
         }
     }
 
     // Move the empty tile up
     void moveUp() {
         if (emptyTileX > 0) {
-            std::swap(board[emptyTileX][emptyTileY], board[emptyTileX - 1][emptyTileY]);
+            swap(board[emptyTileX][emptyTileY], board[emptyTileX - 1][emptyTileY]);
             emptyTileX--;
             moves++;
             if (isSolved())
@@ -106,7 +108,7 @@ public:
     // Move the empty tile down
     void moveDown() {
         if (emptyTileX < SIZE - 1) {
-            std::swap(board[emptyTileX][emptyTileY], board[emptyTileX + 1][emptyTileY]);
+            swap(board[emptyTileX][emptyTileY], board[emptyTileX + 1][emptyTileY]);
             emptyTileX++;
             moves++;
             if (isSolved())
@@ -117,7 +119,7 @@ public:
     // Move the empty tile left
     void moveLeft() {
         if (emptyTileY > 0) {
-            std::swap(board[emptyTileX][emptyTileY], board[emptyTileX][emptyTileY - 1]);
+            swap(board[emptyTileX][emptyTileY], board[emptyTileX][emptyTileY - 1]);
             emptyTileY--;
             moves++;
             if (isSolved())
@@ -128,7 +130,7 @@ public:
     // Move the empty tile right
     void moveRight() {
         if (emptyTileY < SIZE - 1) {
-            std::swap(board[emptyTileX][emptyTileY], board[emptyTileX][emptyTileY + 1]);
+            swap(board[emptyTileX][emptyTileY], board[emptyTileX][emptyTileY + 1]);
             emptyTileY++;
             moves++;
             if (isSolved())
@@ -136,7 +138,7 @@ public:
         }
     }
 
-    // Get the number of moves
+    // Get the number of moves made by the player
     int getMoves() {
         return moves;
     }
@@ -154,13 +156,14 @@ int main() {
     game.createBoard();
     game.shuffleBoard(100);
 
+    // Game loop
     while (!game.isSolved()) {
-        std::cout << "Moves: " << game.getMoves() << std::endl;
-        std::cout << "Time elapsed: " << game.getElapsedTime() << " seconds" << std::endl;
+        cout << "Moves: " << game.getMoves() << endl;
+        cout << "Time elapsed: " << game.getElapsedTime() << " seconds" << endl;
         game.printBoard();
 
         char move;
-        std::cin >> move;
+        cin >> move;
 
         game.makeMove(move);
 
@@ -170,9 +173,9 @@ int main() {
             break;
     }
 
-    std::cout << "Congratulations! Puzzle solved." << std::endl;
-    std::cout << "Total moves: " << game.getMoves() << std::endl;
-    std::cout << "Total time elapsed: " << game.getElapsedTime() << " seconds" << std::endl;
+    cout << "Congratulations! Puzzle solved." << endl;
+    cout << "Total moves: " << game.getMoves() << endl;
+    cout << "Total time elapsed: " << game.getElapsedTime() << " seconds" << endl;
 
     return 0;
 }
