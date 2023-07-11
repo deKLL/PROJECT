@@ -12,3 +12,6 @@ So, this is how to move correctly:
   D - RIGHT
 
 Everything is opposite
+
+
+P.S: I compiled my code in online compiler because my visual studio isn't working
