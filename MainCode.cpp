@@ -164,9 +164,9 @@ int main() {
         char move;
         cin >> move;
 
-        game.makeMove(move);
+        game.makeMove(move); //method of the FifteenPuzzle class which is used to make a move in game
 
-        system("cls");
+        system("cls"); //Clear the console 
 
         if (game.isSolved())
             break;
